@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\V1;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('login', [V1\AuthController::class, 'login']);
 
-Route::get('/', fn () => response()->json(['message' => 'Hello World!']));
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('logout', [V1\AuthController::class, 'logout']);
+});
