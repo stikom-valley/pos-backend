@@ -42,9 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+<<<<<<< HEAD
 
     public function product()
     {
         return $this->belongsTo(Merchants::class);
     }
+=======
+>>>>>>> 9409dd455cbba080f48aaf3c83b3ffe07b08f1ce
 }
