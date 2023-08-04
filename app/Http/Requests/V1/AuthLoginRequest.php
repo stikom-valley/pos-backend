@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class AuthLoginRequest extends FormRequest
 {
@@ -17,13 +18,13 @@ class AuthLoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
     public function rules(): array
     {
         return [
-            'email'     => 'required|email',
-            'password'  => 'required'
+            'email' => ['required', 'email'],
+            'password' => ['required', Password::defaults()]
         ];
     }
 }

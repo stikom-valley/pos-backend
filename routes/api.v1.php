@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\V1;
+use App\Http\Controllers\V1\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\V1;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,8 @@ use App\Http\Controllers\V1;
 |
 */
 
-Route::post('login', [V1\AuthController::class, 'login']);
+Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('logout', [V1\AuthController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
