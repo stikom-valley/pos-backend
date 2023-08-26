@@ -14,6 +14,25 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     /**
+     * @OA\Post(
+     *     path="/api/v1/login",
+     *     tags={"Auth"},
+     *     description="Login Endpoint",
+     *     @OA\RequestBody(
+     *          required=true,
+     *          description="Pass user credentials",
+     *          @OA\JsonContent(
+     *              required={"email","password"},
+     *              @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+     *              @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="successful operation"
+     *     )
+     * )
+     * 
      * User login
      * @param \App\Http\Requests\V1\AuthLoginRequest $request
      * @return UserResource
@@ -36,6 +55,15 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/api/v1/logout",
+     *     tags={"Auth"},
+     *     description="Logout Endpoint",
+     *     @OA\Response(
+     *         response="default",
+     *         description="successful operation"
+     *     )
+     * )
      * Current User logout
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse|mixed

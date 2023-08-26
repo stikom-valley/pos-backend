@@ -20,3 +20,21 @@ Install my-project with composer
 ## API DOCS
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6822571-645a33ff-2fcc-4fa0-bfc7-2314c2193555?action=collection%2Ffork&collection-url=entityId%3D6822571-645a33ff-2fcc-4fa0-bfc7-2314c2193555%26entityType%3Dcollection%26workspaceId%3D994e6bb0-cc1a-4bf4-a5d0-df3b1c2e99f4)
+
+
+## Access
+
+- http : http://localhost:8091
+
+## Credentials
+
+### Postgres
+- Username: postgres
+- Password: example
+- Databae Name: Pos
+- Database Port (Access Through Host): 5434
+
+### Redis
+
+- Password: p4ssw0rd
+- Port (Access Through Host): 6381
