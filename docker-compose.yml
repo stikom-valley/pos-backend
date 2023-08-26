@@ -1,0 +1,81 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: app
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker-conf/php/app.ini:/usr/local/etc/php/conf.d/app.ini
+      - ./docker-conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker-conf/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./docker-conf/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    networks:
+      - dev
+
+  #Nginx Service
+  web:
+    image: nginx:alpine
+    container_name: web
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8091:80"
+    volumes:
+      - ./:/var/www
+      - ./docker-conf/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker-conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - dev
+
+
+  db-pos:
+    image: postgres:14.9-bullseye
+    container_name: db-pos
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5434:5432"
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: pos
+      SERVICE_TAGS: dev
+      SERVICE_NAME: postgres
+    networks:
+      - dev
+
+  redisserver:
+    image: redis:6.2.5-alpine
+    container_name: redisserver
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: p4ssw0rd
+    command: redis-server --requirepass p4ssw0rd
+    volumes:
+      - redisdata:/data
+    tty: true
+    ports:
+      - 6381:6379
+    networks:
+      - dev
+
+
+
+
+networks:
+   dev:
+
+volumes:
+  dbdata:
+    driver: local
+  redisdata:
+    driver: local
+

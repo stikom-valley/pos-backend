@@ -27,4 +27,23 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            $model = $exception->getModel();
+
+            if (method_exists($model, 'getReadableClassName')) {
+                $readableModelName = $model::getReadableClassName();
+            } else {
+                $readableModelName = Str::title(str_replace('_', ' ', Str::snake(class_basename($model))));
+            }
+
+            abort(404, __('Data :model tidak ditemukan', ['model' => $readableModelName]));
+        } else if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return response()->json(['message' => __('Sesi login telah berakhir.')], 401);
+        }
+
+        return parent::render($request, $exception);
+    }
 }
